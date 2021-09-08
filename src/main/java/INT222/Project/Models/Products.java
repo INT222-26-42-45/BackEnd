@@ -2,6 +2,7 @@ package INT222.Project.Models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Products")
+@Table(name = "products")
+@JsonIgnoreProperties(value = "carts")
 public class Products implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,7 @@ public class Products implements Serializable {
 
     @ManyToMany
     @JoinTable(
-      name = "SkorProduct",
+      name = "skorproduct",
       joinColumns = @JoinColumn(name = "ProductId", insertable = false),
       inverseJoinColumns = @JoinColumn(name = "ColorId", insertable = false))
     Set<Colors> colors;
@@ -56,6 +58,18 @@ public class Products implements Serializable {
     @ManyToOne
     @JoinColumn(name = "BrandId")
     private Brands brands;
+
+    @ManyToOne
+    @JoinColumn(name = "UserId")
+    private Users users;
+
+    @ManyToMany
+    @JoinTable(
+            name = "productcart",
+            joinColumns = @JoinColumn(name = "ProductId", insertable = false),
+            inverseJoinColumns = @JoinColumn(name = "CartId", insertable = false))
+    Set<Carts> carts;
+
 
 
 
