@@ -59,16 +59,7 @@ public class Products implements Serializable {
     @JoinColumn(name = "BrandId")
     private Brands brands;
 
-    @ManyToOne
-    @JoinColumn(name = "UserId")
-    private Users users;
 
-    @ManyToMany
-    @JoinTable(
-            name = "productcart",
-            joinColumns = @JoinColumn(name = "ProductId", insertable = false),
-            inverseJoinColumns = @JoinColumn(name = "CartId", insertable = false))
-    Set<Carts> carts;
 
 
 
