@@ -18,13 +18,13 @@ public interface CartRepository extends JpaRepository<Carts, Integer> {
 //
 //    List<Carts> deleteByUsers(Users users);
 
-    List<Carts> findByUser(Users user);
+//    List<Carts> findByUsers(Users users);
 
     Carts findByUsersAndProducts(Users user, Products product);
 
     @Modifying
     @Query(value = "select * from carts where UserId= :userId", nativeQuery = true)
-    List<Carts> findByUser(@Param("userId") Integer userId);
+    List<Carts> findByUsers(@Param("userId") Integer userId);
 
     @Modifying
     @Query(value = "update Carts c set c.quantity = ?1 where c.products.productId = ?2 and c.users.userId= ?3")

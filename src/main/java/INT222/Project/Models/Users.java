@@ -9,12 +9,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
 @JsonIgnoreProperties(value = "roles")
@@ -54,8 +54,11 @@ public class Users {
             name = "userrole",
             joinColumns = @JoinColumn(name = "UserId"),
             inverseJoinColumns = @JoinColumn(name = "RoleId"))
-    private Set<Roles> roles;
+    private Set<Roles> roles = new HashSet<>();
 
-
-
+    public Users(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }

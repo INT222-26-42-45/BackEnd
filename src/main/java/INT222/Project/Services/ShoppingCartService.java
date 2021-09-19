@@ -31,35 +31,35 @@ public class ShoppingCartService {
 //
 
     public List<Carts> listItems(@PathVariable Integer userId) {
-        return cartRepository.findByUser(userId);
+        return cartRepository.findByUsers(userId);
     }
 
 //    public List<Carts> listItems(Users user) {
 //        return cartRepository.findByUser(user);
 //    }
 
-    public Integer addToCart(Integer productId, Integer quantity, Users user) {
+    public Integer addToCart(Integer productId, Integer quantity, Users users) {
         Integer addQuantity = quantity;
         Products product = productRepository.findById(productId).get();
-        Carts carts = cartRepository.findByUsersAndProducts(user, product);
+        Carts carts = cartRepository.findByUsersAndProducts(users, product);
         if (carts != null) {
             addQuantity = carts.getQuantity() + quantity;
             carts.setQuantity(addQuantity);
         } else {
             carts = new Carts();
             carts.setQuantity(quantity);
-            carts.setUsers(user);
+            carts.setUsers(users);
             carts.setProducts(product);
         }
         cartRepository.save(carts);
         return addQuantity;
     }
 
-    public void updateQuantity (Integer productId, Integer quantity, Users user) {
-        cartRepository.updateQuantity(quantity, productId, user.getUserId());
+    public void updateQuantity (Integer productId, Integer quantity, Users users) {
+        cartRepository.updateQuantity(quantity, productId, users.getUserId());
     }
 
-    public void removeProduct(Integer productId, Users user) {
-        cartRepository.deleteByUserAndProducts(user.getUserId(), productId);
+    public void removeProduct(Integer productId, Users users) {
+        cartRepository.deleteByUserAndProducts(users.getUserId(), productId);
     }
 }

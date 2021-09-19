@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "roles")
 public class Roles {
@@ -20,9 +19,17 @@ public class Roles {
     @Column(name = "RoleId")
     private int roleid;
 
+//    @Column(name = "RoleName")
+//    private String rolename;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "RoleName")
-    private String rolename;
+    private ERole rolename;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "roles")
     Set<Users> users;
+
+    public Roles(ERole rolename) {
+        this.rolename = rolename;
+    }
 }

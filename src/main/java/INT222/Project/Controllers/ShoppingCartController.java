@@ -27,20 +27,20 @@ public class ShoppingCartController {
 
     @Transactional
     @PostMapping("/cart/add/{productId}/{quantity}")
-    public String addProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity, Users user){
-        Integer addQuantity = shoppingCartService.addToCart(productId, quantity, user);
+    public String addProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity, Users users){
+        Integer addQuantity = shoppingCartService.addToCart(productId, quantity, users);
         return addQuantity + "this product added to your carts.";
     }
 
     @Transactional
     @PostMapping("/cart/update/{productId}/{quantity}")
-    public void updateProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity, Users user){
-        shoppingCartService.updateQuantity(productId, quantity, user);
+    public void updateProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity, Users users){
+        shoppingCartService.updateQuantity(productId, quantity, users);
     }
 
     @Transactional
-    @PostMapping("/cart/delete/{productId}/{quantity}")
-    public void deleteProductFromCart(@PathVariable Integer productId, @PathVariable Integer quantity, Users user) {
-        shoppingCartService.removeProduct(productId, user);
+    @PostMapping("/cart/delete/{productId}")
+    public void deleteProductFromCart(@PathVariable Integer productId,  Users users) {
+        shoppingCartService.removeProduct(productId, users);
     }
 }
