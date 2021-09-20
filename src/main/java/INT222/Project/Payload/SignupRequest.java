@@ -1,26 +1,36 @@
 package INT222.Project.Payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 import java.util.Set;
 
 @Getter
 @Setter
 public class SignupRequest {
 
-    @NotBlank
+
+    private String firstname;
+
+    private String lastname;
+
+    private Date birth;
+
+    private String gender;
+
+    private String tel;
+
     private String username;
 
-    @NotBlank
     @Email
     private String email;
 
     private Set<String> roles;
 
-    @NotBlank
     private String password;
 
 

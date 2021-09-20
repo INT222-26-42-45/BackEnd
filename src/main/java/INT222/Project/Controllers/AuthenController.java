@@ -75,18 +75,19 @@ public class AuthenController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use."));
         }
         //create new user
-        Users users = new Users(signupRequest.getUsername(),
-                signupRequest.getEmail(),
+        Users users = new Users(signupRequest.getFirstname(), signupRequest.getLastname(),
+                signupRequest.getBirth(), signupRequest.getGender(),signupRequest.getEmail(),0
+                signupRequest.getTel(),signupRequest.getUsername(),
                 encoder.encode(signupRequest.getPassword()));
         Set<String> strRole = signupRequest.getRoles();
         Set<Roles> roles = new HashSet<>();
 
         if (strRole == null) {
-            Roles userRole = roleRepository.findByRolename(ERole.ROLE_USER)
+            Roles userRole = roleRepository.findByRolename(ERole.User)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
-            Roles adminRole = roleRepository.findByRolename(ERole.ROLE_ADMIN)
+            Roles adminRole = roleRepository.findByRolename(ERole.Admin)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(adminRole);
         }
