@@ -59,11 +59,11 @@ public class AuthenController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        return ResponseEntity.ok(new JwtResponse(
                 userDetails.getUserId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,jwt));
     }
 
     @PostMapping("/signup")
@@ -76,7 +76,7 @@ public class AuthenController {
         }
         //create new user
         Users users = new Users(signupRequest.getFirstname(), signupRequest.getLastname(),
-                signupRequest.getBirth(), signupRequest.getGender(),signupRequest.getEmail(),0
+                signupRequest.getBirth(), signupRequest.getGender(),signupRequest.getEmail(),
                 signupRequest.getTel(),signupRequest.getUsername(),
                 encoder.encode(signupRequest.getPassword()));
         Set<String> strRole = signupRequest.getRoles();

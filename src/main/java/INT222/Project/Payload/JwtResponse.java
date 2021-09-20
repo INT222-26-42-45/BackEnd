@@ -9,10 +9,6 @@ import java.util.List;
 @Setter
 public class JwtResponse {
 
-    private String token;
-
-    private String type = "Bearer";
-
     private int userId;
 
     private String username;
@@ -21,11 +17,15 @@ public class JwtResponse {
 
     private List<String> roles;
 
-    public JwtResponse(String token, int userId, String username, String email, List<String> roles) {
-        this.token = token;
+    private String token;
+
+    private String type = "Bearer";
+
+    public JwtResponse(int userId, String username, String email, List<String> roles, String token) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.roles = roles;
+        this.token = token;
     }
 }
