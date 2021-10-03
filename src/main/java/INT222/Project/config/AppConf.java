@@ -10,7 +10,7 @@ public class AppConf implements WebMvcConfigurer {
     @Value("#{'GET, PUT, HEAD, POST, DELETE, OPTION'.split(', ')}")
     private String[] methodList;
 
-    @Value("#{'http://frontend, http://localhost:8080, http://52.230.37.169/'.split(', ')}")
+    @Value("#{'http://frontend, http://localhost:8080, http://52.230.37.169/, http://52.230.37.169:8080'.split(', ')}")
     String[] hostList;
 
     @Override
