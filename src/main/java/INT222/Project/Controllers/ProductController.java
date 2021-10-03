@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 public class ProductController {
 
