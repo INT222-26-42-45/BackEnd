@@ -58,16 +58,6 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        UserDetailsImpl users = (UserDetailsImpl) obj;
-        return Objects.equals(userId, users.userId);
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }
@@ -75,6 +65,16 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        UserDetailsImpl users = (UserDetailsImpl) obj;
+        return Objects.equals(userId, users.userId);
     }
 
     @Override

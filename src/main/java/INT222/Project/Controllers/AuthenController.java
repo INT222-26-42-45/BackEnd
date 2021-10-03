@@ -20,14 +20,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin
+
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
 public class AuthenController {
@@ -48,7 +50,7 @@ public class AuthenController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -67,20 +69,23 @@ public class AuthenController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> regisUser(@Valid @RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<?> regisUser(@RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken."));
         }
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use."));
         }
+//        System.out.println(signupRequest.getEmail());
         //create new user
         Users users = new Users(signupRequest.getFirstname(), signupRequest.getLastname(),
                 signupRequest.getBirth(), signupRequest.getGender(),signupRequest.getEmail(),
                 signupRequest.getTel(),signupRequest.getUsername(),
                 encoder.encode(signupRequest.getPassword()));
+
         Set<String> strRole = signupRequest.getRoles();
         Set<Roles> roles = new HashSet<>();
+
 
         if (strRole == null) {
             Roles userRole = roleRepository.findByRolename(ERole.User)
@@ -93,6 +98,7 @@ public class AuthenController {
         }
             users.setRoles(roles);
         userRepository.save(users);
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully."));
         }
 }

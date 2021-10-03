@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 public class ShoppingCartController {
 

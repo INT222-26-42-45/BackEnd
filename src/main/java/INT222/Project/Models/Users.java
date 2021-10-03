@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "users")
 @JsonIgnoreProperties(value = "roles")
 public class Users {
@@ -65,5 +64,9 @@ public class Users {
         this.tel = tel;
         this.username = username;
         this.password = password;
+    }
+
+    public Users() {
+
     }
 }

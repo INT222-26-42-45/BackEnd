@@ -1,11 +1,12 @@
 package INT222.Project.Payload;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.util.Set;
 
@@ -26,10 +27,11 @@ public class SignupRequest {
 
     private String username;
 
-    @Email
+
     private String email;
 
     private Set<String> roles;
+
 
     private String password;
 
