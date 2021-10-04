@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "carts")
+@Table(name = "Carts")
 public class Carts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
