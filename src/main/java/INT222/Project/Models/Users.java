@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "Users")
 @JsonIgnoreProperties(value = "roles")
 public class Users {
     @Id
@@ -50,7 +50,7 @@ public class Users {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "userrole",
+            name = "UserRole",
             joinColumns = @JoinColumn(name = "UserId"),
             inverseJoinColumns = @JoinColumn(name = "RoleId"))
     private Set<Roles> roles = new HashSet<>();

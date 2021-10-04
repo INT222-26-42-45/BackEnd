@@ -16,9 +16,9 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "colors")
+@Table(name = "Colors")
 @JsonIgnoreProperties(value = "products")
-@SQLInsert(sql = "INSERT IGNORE INTO colors(ColorId, ColorName) VALUES(?,?)")
+@SQLInsert(sql = "INSERT IGNORE INTO Colors(ColorId, ColorName) VALUES(?,?)")
 public class Colors {
     @Id
     @Column(name = "ColorId")

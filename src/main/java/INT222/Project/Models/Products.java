@@ -18,8 +18,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "products")
-@JsonIgnoreProperties(value = "carts")
+@Table(name = "Products")
+@JsonIgnoreProperties(value = "Carts")
 public class Products implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Products implements Serializable {
 
     @ManyToMany
     @JoinTable(
-      name = "skorproduct",
+      name = "SkorProduct",
       joinColumns = @JoinColumn(name = "ProductId", insertable = false),
       inverseJoinColumns = @JoinColumn(name = "ColorId", insertable = false))
     Set<Colors> colors;
