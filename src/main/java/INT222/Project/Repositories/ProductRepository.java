@@ -18,4 +18,6 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
     @Modifying
     @Query(value = "select * from Products where ProductName= :ProductName", nativeQuery = true)
     List<Products> selectProduct(@Param("ProductName") String productName);
+
+
 }

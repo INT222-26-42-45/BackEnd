@@ -65,4 +65,4 @@ jobs:
               sudo docker pull ghcr.io/int222-26-42-45/backend
               sudo docker images
               sudo docker rm backend
-              sudo docker run -p 9000:9000 -d --name backend --network skorshopnetwork --ip 172.18.0.3 ghcr.io/int222-26-42-45/backend
+              sudo docker run -d --name backend --network skorshopnetwork --ip 172.18.0.3 ghcr.io/int222-26-42-45/backend
