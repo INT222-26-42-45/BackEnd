@@ -14,7 +14,7 @@ public class BrandService {
     BrandRepository brandRepository;
 
     //PostMapping admin
-    public Brands addBrand(@RequestBody Brands newBrand) {
+    public Brands addBrand(Brands newBrand) {
         return  brandRepository.save(newBrand);
     }
 

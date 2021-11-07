@@ -50,12 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(authenEntryPointJwt).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/auth/**", "/image/*", "/product").permitAll()
-                .anyRequest().authenticated();
-
         //Authority User
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/{userId}").hasAuthority(String.valueOf(ERole.User));
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/user/edit/{userId}").hasAuthority(String.valueOf(ERole.User));
@@ -68,6 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/color/add").hasAuthority(String.valueOf(ERole.Admin));
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/color/delete/{colorId}").hasAuthority(String.valueOf(ERole.Admin));
 
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(authenEntryPointJwt).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().antMatchers("/auth/**", "/image/*", "/product", "/color/**", "/brand/**").permitAll()
+                .anyRequest().authenticated();
+
+
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
     }
 }

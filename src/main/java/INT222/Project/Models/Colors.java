@@ -18,9 +18,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "Colors")
 @JsonIgnoreProperties(value = "products")
-@SQLInsert(sql = "INSERT IGNORE INTO Colors(ColorId, ColorName) VALUES(?,?)")
+//@SQLInsert(sql = "INSERT IGNORE INTO Colors(ColorId, ColorName) VALUES(?,?)")
 public class Colors {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ColorId")
     private int colorId;
 
