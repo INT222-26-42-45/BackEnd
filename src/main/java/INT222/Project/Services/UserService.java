@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
 
     //GetMapping admin
     public List<Users> allUsers() {
@@ -49,8 +51,9 @@ public class UserService {
 
     //DeleteMapping admin
     public void deleteUser(@PathVariable Integer userId) {
-        userRepository.deleteUser(userId);
-        userRepository.deleteById(userId);
+            userRepository.deleteUser(userId);
+            userRepository.deleteById(userId);
+
     }
 
 
