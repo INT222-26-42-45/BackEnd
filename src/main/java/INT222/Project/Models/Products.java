@@ -29,8 +29,8 @@ public class Products implements Serializable {
     @ManyToMany
     @JoinTable(
       name = "SkorProduct",
-      joinColumns = @JoinColumn(name = "ProductId", insertable = false),
-      inverseJoinColumns = @JoinColumn(name = "ColorId", insertable = false))
+      joinColumns = @JoinColumn(name = "ProductId"),
+      inverseJoinColumns = @JoinColumn(name = "ColorId"))
     Set<Colors> colors;
 
     @Column(name = "ProductName")

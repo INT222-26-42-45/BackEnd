@@ -10,11 +10,11 @@ public class AppConf implements WebMvcConfigurer {
     @Value("#{'GET, PUT, HEAD, POST, DELETE, OPTION'.split(', ')}")
     private String[] methodList;
 
-    @Value("#{'http://frontend, http://localhost:8080, http://52.230.37.169/, http://52.230.37.169:8080'.split(', ')}")
+    @Value("#{'http://frontend, http://localhost:8080, http://52.230.37.169/, http://52.230.37.169:8080, https://skorshop.ddns.net/'.split(', ')}")
     String[] hostList;
 
     @Override
     public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**").allowedOrigins(hostList).allowedMethods(methodList);
+        registry.addMapping("/**").allowedOrigins(hostList).allowedMethods(methodList).allowedHeaders("*");
     }
 }

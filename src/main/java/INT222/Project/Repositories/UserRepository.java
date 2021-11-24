@@ -19,4 +19,9 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Modifying
     @Query(value = "delete from UserRole where UserId= :UserId", nativeQuery = true)
     void deleteUser(@Param("UserId") Integer userId);
+
+    Boolean findByPassword(String password);
+
+
+
 }

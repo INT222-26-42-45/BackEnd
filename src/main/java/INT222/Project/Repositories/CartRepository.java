@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Carts, Integer> {
 
@@ -20,15 +21,12 @@ public interface CartRepository extends JpaRepository<Carts, Integer> {
 
 //    List<Carts> findByUsers(Users users);
 
-    Carts findByUsersAndProducts(Users user, Products product);
+    Optional<Carts> findByUsersAndProducts(Users user, Products product);
 
     @Modifying
     @Query(value = "select * from Carts where UserId= :userId", nativeQuery = true)
     List<Carts> findByUsers(@Param("userId") Integer userId);
 
-    @Modifying
-    @Query(value = "update Carts c set c.quantity = ?1 where c.products.productId = ?2 and c.users.userId= ?3")
-    void updateQuantity(Integer quantity, Integer productId, Integer userId);
 
     @Modifying
     @Query(value = "delete from Carts c where c.users.userId = ?1 and c.products.productId = ?2")
