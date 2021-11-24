@@ -15,6 +15,6 @@ public class AppConf implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**").allowedOrigins(hostList).allowedMethods(methodList);
+        registry.addMapping("/**").allowedOrigins(hostList).allowedMethods(methodList).allowedHeaders("*");
     }
 }

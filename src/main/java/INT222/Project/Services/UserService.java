@@ -4,8 +4,10 @@ import INT222.Project.Models.Products;
 import INT222.Project.Models.Users;
 import INT222.Project.Repositories.RoleRepository;
 import INT222.Project.Repositories.UserRepository;
+import INT222.Project.Security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +37,9 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public Users getUser(String username){
+       return userRepository.findByUsername(username).orElse(null);
+    }
     //PutMapping user
     public Optional<Users> editUser(@PathVariable Integer userId, @RequestBody Users newUser){
         return userRepository.findById(userId).map(users -> {
@@ -55,6 +60,7 @@ public class UserService {
             userRepository.deleteById(userId);
 
     }
+
 
 
 
