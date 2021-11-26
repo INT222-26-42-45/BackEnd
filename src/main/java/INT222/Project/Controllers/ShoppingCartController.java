@@ -2,20 +2,18 @@ package INT222.Project.Controllers;
 
 import INT222.Project.Models.Carts;
 import INT222.Project.Models.Users;
-import INT222.Project.Services.ProductService;
 import INT222.Project.Services.ShoppingCartService;
 import INT222.Project.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 
 
 @CrossOrigin("*")
@@ -30,9 +28,10 @@ public class ShoppingCartController {
 
 
     @Transactional
-    @GetMapping("/cart/{userId}")
-    public List<Carts> showCart (@PathVariable Integer userId){
-        return  shoppingCartService.listItems(userId);
+    @GetMapping("/cart")
+    public List<Carts> showCart (@AuthenticationPrincipal UserDetails userDetails){
+        Users users = userService.getUser(userDetails.getUsername());
+        return  shoppingCartService.listItems(users.getUserId());
     }
 
     @Transactional
@@ -43,21 +42,30 @@ public class ShoppingCartController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         Users users = userService.getUser(userDetails.getUsername());
+        System.out.println(userDetails.getUsername());
 
         Integer addQuantity = shoppingCartService.addToCart(productId, quantity, users);
         return ResponseEntity.ok().body(addQuantity + "this product added to your carts.");
     }
 
+    @Transactional
+    @PutMapping("/cart/update/{cartId}/{quantity}")
+    public String updateCartInCart(@PathVariable Integer cartId, @PathVariable Integer quantity, @AuthenticationPrincipal UserDetails userDetails ){
+        if (userDetails == null) {
+            return "You must login to update quantity.";
+        }
+         shoppingCartService.updateCart(cartId,quantity);
+        return "The cart has been update.";
+    }
 
 
     @Transactional
-    @PostMapping("/cart/delete/{productId}/{quantity}")
-    public String deleteProductFromCart(@PathVariable Integer productId ,@PathVariable Integer quantity,  @AuthenticationPrincipal UserDetails userDetails) {
+    @DeleteMapping("/cart/delete/{cartId}")
+    public String deleteProductFromCart(@PathVariable Integer cartId , @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return "You must login to remove product.";
         }
-        Users users = userService.getUser(userDetails.getUsername());
-        shoppingCartService.removeProduct(productId,quantity, users);
+        shoppingCartService.removeProduct(cartId);
         return "The product has been remove from your cart.";
     }
 }

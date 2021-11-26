@@ -26,12 +26,9 @@ public class Products implements Serializable {
     @Column(name = "ProductId")
     private int productId;
 
-    @ManyToMany
-    @JoinTable(
-      name = "SkorProduct",
-      joinColumns = @JoinColumn(name = "ProductId"),
-      inverseJoinColumns = @JoinColumn(name = "ColorId"))
-    Set<Colors> colors;
+    @ManyToOne
+    @JoinColumn(name = "ColorId")
+    private Colors colors;
 
     @Column(name = "ProductName")
     private String productName;

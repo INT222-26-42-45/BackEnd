@@ -40,6 +40,7 @@ public class UserService {
     public Users getUser(String username){
        return userRepository.findByUsername(username).orElse(null);
     }
+
     //PutMapping user
     public Optional<Users> editUser(@PathVariable Integer userId, @RequestBody Users newUser){
         return userRepository.findById(userId).map(users -> {
