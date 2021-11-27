@@ -8,10 +8,10 @@ import INT222.Project.Repositories.CartRepository;
 import INT222.Project.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -24,54 +24,32 @@ public class ShoppingCartService {
     @Autowired
     ProductRepository productRepository;
 
-
-
-
-    public List<Carts> listItems(@PathVariable Integer userId) {
-        return cartRepository.findByUsers(userId);
+    public List<Carts> listItems(Integer userId) {
+        return cartRepository.getCartByUserId(userId);
     }
-
-//    public List<Carts> listItems(Users user) {
-//        return cartRepository.findByUser(user);
-//    }
 
     public Integer addToCart(Integer productId, Integer quantity, Users users) {
         Integer addQuantity = quantity;
         Products product = productRepository.findById(productId).get();
         Carts carts;
-        if (cartRepository.findByUsersAndProducts(users, product).isPresent()) {
-            carts = cartRepository.findByUsersAndProducts(users, product).get();
-            addQuantity = carts.getQuantity() + quantity;
-            carts.setQuantity(addQuantity);
-            carts.setTotal(carts.getTotal() + (product.getProductPrice()*quantity) );
-        } else {
             carts = new Carts();
             carts.setQuantity(quantity);
             carts.setUsers(users);
             carts.setProducts(product);
             carts.setTotal(product.getProductPrice()*quantity);
-        }
+//        }
         cartRepository.save(carts);
         return addQuantity;
     }
 
+    public void updateCart(Integer cartId,Integer quantity){
+        Carts carts = cartRepository.findById(cartId).get();
+        Double total = carts.getProducts().getProductPrice()*quantity;
 
+         cartRepository.updateQuantity(cartId,quantity,total);
+    }
 
-    public void removeProduct(Integer productId,Integer quantity, Users users) {
-        Products products = productRepository.findById(productId).orElse(null);
-        Carts carts ;
-        // can find cart
-        if(cartRepository.findByUsersAndProducts(users,products).isPresent()) {
-            carts = cartRepository.findByUsersAndProducts(users, products).get();
-            if(carts.getQuantity() < quantity ){
-                carts.setQuantity(carts.getQuantity()-quantity);
-                carts.setTotal(carts.getTotal() - (quantity * carts.getProducts().getProductPrice()));
-                cartRepository.save(carts);
-            }else if (carts.getQuantity() == quantity){
-                cartRepository.deleteByUserAndProducts(users.getUserId(), productId);
-            }else{
-                return;
-            }
-        }
+    public void removeProduct(Integer cartId) {
+        cartRepository.deleteById(cartId);
     }
 }

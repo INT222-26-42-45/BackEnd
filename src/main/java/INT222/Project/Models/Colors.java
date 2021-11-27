@@ -25,8 +25,6 @@ public class Colors {
     @Column(name = "ColorId")
     private int colorId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "colors")
-    Set<Products> products;
 
     @Column(name = "ColorName")
     private String colorName;

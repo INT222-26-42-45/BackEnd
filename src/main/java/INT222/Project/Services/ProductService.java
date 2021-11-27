@@ -30,7 +30,6 @@ public class ProductService {
 
     //DeleteMapping
     public void deleteProduct(@PathVariable Integer productId) {
-        productRepository.deleteProduct(productId);
         productRepository.deleteById(productId);
     }
 
@@ -52,9 +51,9 @@ public class ProductService {
 
     //PostMapping
     public Products addProduct(@RequestBody Products newProducts){
-        for(Colors c : newProducts.getColors()){
-            newProducts.getColors().add(c);
-        }
+//        for(Colors c : newProducts.getColors()){
+//            newProducts.getColors().add(c);
+//        }
         return productRepository.save(newProducts);
     }
 

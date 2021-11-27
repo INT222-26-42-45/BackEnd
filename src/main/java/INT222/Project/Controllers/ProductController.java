@@ -37,12 +37,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{productId}")
-    public Products showProduct(@PathVariable Integer productId
-//                                @AuthenticationPrincipal UserDetails userDetails
-    ){
-//        if (userDetails == null) {
-//
-//        }
+    public Products showProduct(@PathVariable Integer productId){
         if(productService.showProduct(productId) == null ) {
             throw new ResourceNotFoundException("ProductId:"+productId+" is not found.");
         }

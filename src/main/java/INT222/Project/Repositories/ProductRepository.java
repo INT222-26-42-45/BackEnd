@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Products, Integer> {
 
-    @Modifying
-    @Query(value = "delete from SkorProduct where ProductId= :ProductId", nativeQuery = true)
-    void deleteProduct(@Param("ProductId") Integer productId);
+//    @Modifying
+//    @Query(value = "delete from SkorProduct where ProductId= :ProductId", nativeQuery = true)
+//    void deleteProduct(@Param("ProductId") Integer productId);
 
     @Modifying
     @Query(value = "select * from Products where ProductName= :ProductName", nativeQuery = true)
