@@ -55,9 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //Authority User
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/{userId}").hasAuthority(String.valueOf(ERole.User));
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/user/edit/{userId}").hasAuthority(String.valueOf(ERole.User));
 
         //Authority Admin
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/listuser").hasAuthority(String.valueOf(ERole.Admin));
