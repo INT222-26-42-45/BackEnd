@@ -58,16 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //Authority Admin
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/listuser").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/user/delete/{userId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/user/delete/**").hasAuthority(String.valueOf(ERole.Admin));
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/brand/add").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/brand/delete/{brandId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/brand/delete/**").hasAuthority(String.valueOf(ERole.Admin));
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/color/add").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/color/delete/{colorId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/color/delete/**").hasAuthority(String.valueOf(ERole.Admin));
 
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authenEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/auth/**", "/image/*", "/product","/product/**", "/color/**", "/brand/**").permitAll()
+                .authorizeRequests().antMatchers("/auth/**", "/image/*", "/product","/product/**", "/color/**", "/brand/**", "/add", "/delete/**",
+                        "/edit/**").permitAll()
                 .anyRequest().authenticated();
 
 
