@@ -6,6 +6,7 @@ import INT222.Project.Models.Products;
 import INT222.Project.Services.FileStorageService;
 import INT222.Project.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,10 +78,10 @@ public class ProductController {
     }
 
     @GetMapping("/image/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
         Resource file = fileStorageService.load(filename);
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; fliename=\"" + file.getFilename()+"\"").body(file);
+        ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(file.getFile().toPath()));
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(byteArrayResource);
     }
 
 

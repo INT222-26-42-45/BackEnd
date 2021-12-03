@@ -8,6 +8,7 @@ import INT222.Project.Security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,41 +28,41 @@ public class UserService {
     RoleRepository roleRepository;
 
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     //GetMapping admin
     public List<Users> allUsers() {
         return userRepository.findAll();
     }
 
     //GetMapping user
-    public Users showUser(@PathVariable Integer userId){
-        return userRepository.findById(userId).orElse(null);
+    public List<Users> listUser(Integer userId){
+        return userRepository.getUserByUserId(userId);
     }
 
     public Users getUser(String username){
        return userRepository.findByUsername(username).orElse(null);
     }
 
-    //PutMapping user
-    public Optional<Users> editUser(@PathVariable Integer userId, @RequestBody Users newUser){
-        return userRepository.findById(userId).map(users -> {
-            users.setFirstname(newUser.getFirstname());
-            users.setLastname(newUser.getLastname());
-            users.setEmail(newUser.getEmail());
-            users.setTel(newUser.getTel());
-            users.setBirth(newUser.getBirth());
-            users.setGender(newUser.getGender());
-            users.setUsername(newUser.getUsername());
-            return userRepository.save(newUser);
-        });
+    public void editUser(Integer userId, Users newUser){
+        if(userRepository.findById(userId).isPresent()) {
+           Users oldUsers = userRepository.findById(userId).get();
+           oldUsers.setBirth(newUser.getBirth());
+           oldUsers.setFirstname(newUser.getFirstname());
+           oldUsers.setLastname(newUser.getLastname());
+           oldUsers.setTel(newUser.getTel());
+           oldUsers.setGender(newUser.getGender());
+           oldUsers.setEmail(newUser.getEmail());
+            userRepository.save(oldUsers);
+        }
     }
 
     //DeleteMapping admin
-    public void deleteUser(@PathVariable Integer userId) {
-            userRepository.deleteUser(userId);
-            userRepository.deleteById(userId);
-
+    public void deleteUser(Integer userId) {
+        userRepository.deleteUserRole(userId);
+        userRepository.deleteById(userId);
     }
-
 
 
 

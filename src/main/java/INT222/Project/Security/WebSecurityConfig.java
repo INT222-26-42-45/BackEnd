@@ -55,17 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //Authority User
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/{userId}").hasAuthority(String.valueOf(ERole.User));
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/user/edit/{userId}").hasAuthority(String.valueOf(ERole.User));
 
         //Authority Admin
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/listuser").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/user/delete/{userId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/user/delete/**").hasAuthority(String.valueOf(ERole.Admin));
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/brand/add").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/brand/delete/{brandId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/brand/delete/**").hasAuthority(String.valueOf(ERole.Admin));
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/color/add").hasAuthority(String.valueOf(ERole.Admin));
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/color/delete/{colorId}").hasAuthority(String.valueOf(ERole.Admin));
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/color/delete/**").hasAuthority(String.valueOf(ERole.Admin));
 
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authenEntryPointJwt).and()

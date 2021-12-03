@@ -5,18 +5,21 @@ import INT222.Project.Models.Users;
 import INT222.Project.Repositories.UserRepository;
 import INT222.Project.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+
 
 @CrossOrigin("*")
 @RestController
 public class UserController {
     @Autowired
     UserService userService;
+
 
     @Autowired
     UserRepository userRepository;
@@ -28,25 +31,24 @@ public class UserController {
     }
 
     //user
-    @GetMapping("/user/{userId}")
-    public Users showUser(@PathVariable Integer userId){
-        return userService.showUser(userId);
+    @GetMapping("/user")
+    public List<Users> showUser(@AuthenticationPrincipal UserDetails userDetails){
+        Users users = userService.getUser(userDetails.getUsername());
+        return userService.listUser(users.getUserId());
     }
 
     //user
     @PutMapping("/user/edit/{userId}")
-    public Optional<Users> updateUser(@PathVariable Integer userId, @RequestPart Users newUser){
-        return userService.editUser(userId, newUser);
+    public String updateUser(@PathVariable Integer userId,@RequestPart Users newUser){
+        userService.editUser(userId, newUser);
+        return "Your profile has been update.";
     }
 
     //admin
     @Transactional
     @DeleteMapping("/user/delete/{userId}")
-    public void deleteUser(@PathVariable Integer userId,@RequestParam String password)throws Exception {
-        if (password.equals(userRepository.findByPassword(password))){
-            userService.deleteUser(userId);
-        }
-        throw new Exception("Password not wrong!");
+    public void deleteUser(@PathVariable Integer userId){
+        userService.deleteUser(userId);
     }
 
 }
