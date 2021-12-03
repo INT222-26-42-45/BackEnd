@@ -3,12 +3,10 @@ package INT222.Project.Controllers;
 
 import INT222.Project.Models.Users;
 import INT222.Project.Repositories.UserRepository;
-import INT222.Project.Services.DeleteUserDTO;
 import INT222.Project.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -48,9 +46,9 @@ public class UserController {
 
     //admin
     @Transactional
-    @DeleteMapping("/user/delete")
-    public void deleteUser(@RequestPart DeleteUserDTO deleteUserForm){
-        userService.deleteUser(deleteUserForm);
+    @DeleteMapping("/user/delete/{userId}")
+    public void deleteUser(@PathVariable Integer userId){
+        userService.deleteUser(userId);
     }
 
 }

@@ -26,7 +26,6 @@ public class ColorController {
     //admin
     @PostMapping("/color/add")
     public Colors newColors(@RequestPart Colors newColor) {
-        System.out.println(newColor.toString());
         return colorService.addColor(newColor);
 
     }

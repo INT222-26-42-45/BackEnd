@@ -82,8 +82,6 @@ public class ProductController {
         Resource file = fileStorageService.load(filename);
         ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(file.getFile().toPath()));
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(byteArrayResource);
-//        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).header(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; fliename=\"" + file.getFilename()+"\"").body(file);
     }
 
 

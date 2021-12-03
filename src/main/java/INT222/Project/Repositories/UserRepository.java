@@ -21,19 +21,14 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     Boolean existsByEmail(String email);
 
     @Modifying
-    @Transactional
-    void deleteByUserId(Integer userId);
-
-//    Boolean findByPassword(String password);
+    @Query(value = "delete from UserRole where UserId= :userId", nativeQuery = true)
+    void deleteUserRole(@Param("userId") Integer userId);
 
     @Modifying
     @Query(value = "select * from Users where UserId= :userId", nativeQuery = true)
     List<Users> getUserByUserId(@Param("userId") Integer userId);
 
-//    @Modifying
-//    @Query(value = "update Users set Firstname= :firstname, Lastname= :lastname, Birth= :birth, Gender= :gender, Email= :email, Tel= :tel  where UserId= :userId ", nativeQuery = true)
-//    void updateProfile(@Param("userId") Integer userId, @Param("firstname") String firstname, @Param("lastname") String lastname, @Param("birth") Date birth, @Param("gender") String gender,
-//                       @Param("email") String email, @Param("tel") String tel);
+
 
 
 

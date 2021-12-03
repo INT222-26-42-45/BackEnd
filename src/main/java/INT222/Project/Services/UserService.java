@@ -45,11 +45,6 @@ public class UserService {
        return userRepository.findByUsername(username).orElse(null);
     }
 
-    //PutMapping user
-//    public void editUser(Integer userId, Users newUser){
-//        userRepository.updateProfile(newUser.getUserId(),newUser.getFirstname(),newUser.getLastname(),newUser.getBirth(),
-//                newUser.getGender(),newUser.getEmail(),newUser.getTel());
-//    }
     public void editUser(Integer userId, Users newUser){
         if(userRepository.findById(userId).isPresent()) {
            Users oldUsers = userRepository.findById(userId).get();
@@ -64,14 +59,9 @@ public class UserService {
     }
 
     //DeleteMapping admin
-    public void deleteUser(DeleteUserDTO deleteUserForm) {
-        if (userRepository.findById(deleteUserForm.getAdminId()).isPresent()) {
-            Users admin = userRepository.findById(deleteUserForm.getAdminId()).get();
-            if (passwordEncoder.matches(admin.getPassword(), deleteUserForm.getAdminPassword())) {
-                userRepository.deleteByUserId(deleteUserForm.getUserId());
-            }
-
-        }
+    public void deleteUser(Integer userId) {
+        userRepository.deleteUserRole(userId);
+        userRepository.deleteById(userId);
     }
 
 
