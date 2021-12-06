@@ -28,8 +28,8 @@ public class ShoppingCartService {
         return cartRepository.getCartByUserId(userId);
     }
 
-    public Integer addToCart(Integer productId, Integer quantity, Users users) {
-        Integer addQuantity = quantity;
+    public void addToCart(Integer productId, Integer quantity, Users users) {
+//        Integer addQuantity = quantity;
         Products product = productRepository.findById(productId).get();
         Carts carts;
             carts = new Carts();
@@ -39,7 +39,7 @@ public class ShoppingCartService {
             carts.setTotal(product.getProductPrice()*quantity);
 //        }
         cartRepository.save(carts);
-        return addQuantity;
+//        return addQuantity;
     }
 
     public void updateCart(Integer cartId,Integer quantity){
