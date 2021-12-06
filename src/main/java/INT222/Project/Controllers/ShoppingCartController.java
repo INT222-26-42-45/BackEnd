@@ -36,16 +36,21 @@ public class ShoppingCartController {
 
     @Transactional
     @PostMapping("/cart/add/{productId}/{quantity}")
-    public ResponseEntity<?> addProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity,
+    public String addProductToCart(@PathVariable Integer productId, @PathVariable Integer quantity,
                                            @AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return "You must login to update quantity.";
         }
-        Users users = userService.getUser(userDetails.getUsername());
-        System.out.println(userDetails.getUsername());
+        try {
+            Users users = userService.getUser(userDetails.getUsername());
+            System.out.println(userDetails.getUsername());
 
-        Integer addQuantity = shoppingCartService.addToCart(productId, quantity, users);
-        return ResponseEntity.ok().body(addQuantity + "this product added to your carts.");
+            shoppingCartService.addToCart(productId, quantity, users);
+            return "this product added to your carts.";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+
     }
 
     @Transactional
