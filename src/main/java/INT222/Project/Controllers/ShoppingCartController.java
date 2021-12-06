@@ -41,11 +41,16 @@ public class ShoppingCartController {
         if (userDetails == null) {
             return "You must login to update quantity.";
         }
-        Users users = userService.getUser(userDetails.getUsername());
-        System.out.println(userDetails.getUsername());
+        try {
+            Users users = userService.getUser(userDetails.getUsername());
+            System.out.println(userDetails.getUsername());
 
-          shoppingCartService.addToCart(productId, quantity, users);
-        return "this product added to your carts.";
+            shoppingCartService.addToCart(productId, quantity, users);
+            return "this product added to your carts.";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+
     }
 
     @Transactional
